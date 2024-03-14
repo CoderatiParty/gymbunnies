@@ -4,7 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
 from flask_mail import Mail, Message
-import secrets
 
 """
 The above lines are used to import built-in functions from Flask
@@ -19,7 +18,7 @@ def create_app():
     This is the applications main function
     """
     app = Flask(__name__) # Creates the app
-    app.config['SECRET_KEY'] = 'gymbunniesareusman' # Defines the secret key
+    app.config['SECRET_KEY'] = os.urandom(16) # Generates a random secret key
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + DB_NAME # Defines the database
     app.config['MAIL_SERVER'] = 'smtp.zoho.eu' # Defines the server for outgoing mail
     app.config['MAIL_PORT'] = 465 # Sets the port
@@ -36,9 +35,6 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/') # Calls the Blueprint application from within Flask
 
     mail = Mail(app) # Sets the mail function within the app
-
-    with app.app_context(): # Calls the databaase tables and makes them assessible within the application
-        db.create_all()
 
     login_manager = LoginManager()# Calls the login manager application
     login_manager.login_view = 'auth.login' # Sets the login route
@@ -60,6 +56,7 @@ def create_database(app):
     """
     Initiates the database if it doesn't already exist
     """
-    if not path.exists('website/' + DB_NAME):
-        db.create_all(app=app)
-        print('Created Database!')
+    with app.app_context(): # Calls the database tables and makes them assessible within the application
+        db.create_all()
+        if not path.exists('website/' + DB_NAME):
+            print('Created Database!')
