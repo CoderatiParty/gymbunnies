@@ -1,0 +1,810 @@
+* {
+    box-sizing: border-box;  /* Box-sizing is used across all elements to include the padding and border in the total size. */
+  }
+  
+  /* BODY SETTINGS */
+  
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    color: #004d40;
+    font-family: helvetica, avenir, verdana, arial;
+  }
+  
+  main {
+    flex: 1 0 auto;
+  }
+  
+  /* --- GOOGLE FONT SETTINGS FOR LOGO ---- */
+  
+  .tourney-logo {
+    font-family: "Tourney", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+  }
+  
+  /* --- NAVBAR STYLING ---- */
+  
+  h3 {
+    color: #004d40;
+    padding: 10px;
+    font-weight: bold;
+  }
+  
+  .bold {
+    font-weight: bold;
+  }
+  
+  .slogan {
+    font-size: 20px;
+  }
+  
+  .active {
+    text-decoration: underline;
+  }
+  
+  /* --- FLASH MESSAGE STYLING ---- */
+  
+  .flash {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 0px;
+  }
+  
+  .flash.error {
+    background-color: #e53935;
+    color: #ffffff;
+  }
+  
+  .flash.success {
+    background-color: #00c853;
+    color: #ffffff;
+  }
+  
+  .close-alert {
+    float: right;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+    line-height: 1;
+  }
+  
+  .close-alert:hover {
+    color: #555;
+  }
+  
+  /* --- LOGIN PAGE SETTINGS ---- */
+  
+  .login {
+      position: absolute;
+      width: 100%;
+    }
+  
+  /* r_container classes allow stacking within divisions on small screens. */
+    
+    .login_r-container {
+      display: table;
+      width: 100%;
+      padding: 0px;
+    }
+    
+    .login_left {
+      display: table-cell;
+      vertical-align: middle;
+      width: 60%;
+    }
+  
+    .login_right {
+      vertical-align: middle;
+      text-align: center;
+      display: table-cell;
+      width: 40%;
+      padding-top: 0px;
+      padding-bottom: 0px;
+      padding-right: 5%
+    }
+    
+    .login-card {
+      border-radius: 10px;
+      margin: auto;
+      text-align: left;
+      background-color: #64ffda;
+      padding: 25px;
+      width: 80%;
+      color: #004d40;
+    }
+    
+    .login-card h3 {
+      text-align: center;
+      color: #004d40;
+    }
+  
+  /* --- SIGNUP PAGE SETTINGS ---- */
+  
+  .signup { /* The login page is controlled here. */
+    position: absolute;
+    width: 100%;
+  }
+  
+  .signup_r-container {
+    display: table;
+    width: 100%;
+    padding: 0px;
+  }
+  
+  .signup_left {
+    display: table-cell;
+    vertical-align: middle;
+    width: 60%;
+  }
+  
+  .signup_right {
+    vertical-align: middle;
+    text-align: center;
+    display: table-cell;
+    width: 40%;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 5%
+  }
+  
+  .signup-card {
+    border-radius: 10px;
+    margin: auto;
+    text-align: left;
+    background-color: #64ffda;
+    padding: 25px;
+    width: 80%;
+  }
+  
+  .signup-card h3 {
+    text-align: center;
+  }
+  
+  /* --- PROFILE PAGE SETTINGS ---- */
+  
+  .profile {
+    position: absolute;
+    width: 100%;
+  }
+  
+  .profile_r-container {
+    display: table;
+    width: 100%;
+    padding: 0px;
+  }
+  
+  .profile_left {
+    display: table-cell;
+    vertical-align: top;
+    width: 65%;
+    text-align: center;
+  }
+  
+  .profile_left summary {
+    background-color: #64ffda;
+    margin-top: 20px;
+    border-radius: 5px;
+  }
+  
+  .profile_left summary ~ p {
+    background-color: #a7ffeb;
+    border: 1px #64ffda solid;
+    width: 98%;
+    margin: auto;
+  }
+  
+  .profile_right {
+    background-color: #64ffda;
+    background-image: linear-gradient(#a1aeb8 0.1%, #adbdc5 0.1%, #64ffda 0.4%, #64ffda 99.4%);
+    vertical-align: top;
+    text-align: center;
+    display: table-cell;
+    width: 35%;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  
+  .add-workout-card {
+    border-radius: 10px;
+    margin: auto;
+    text-align: center;
+    background-color: #64ffda;
+    color: #004d40;
+    padding: 25px;
+    width: 50%;
+  }
+  
+  .profile_left a:hover {
+    opacity: 0.7;
+    cursor: pointer;
+  }
+  
+  .pic-card {
+    width: 80%;
+    margin: auto;
+    background-color: #1de9b6;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    border: 1px #00c853 solid;
+    text-align: center;
+  }
+  
+  .user-card {
+    width: 80%;
+    margin: auto;
+    background-color: #a7ffeb;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px #00c853 solid;
+  }
+  
+  .stats-card {
+    width: 80%;
+    margin: auto;
+    background-color: #76ff03;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px #00c853 solid;
+    margin-bottom: 100px;
+  }
+  
+  .stats-card a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .profile_right a {
+    margin-bottom: 25px;
+  }
+  
+  /* --- EDIT PROFILE PAGE SETTINGS ---- */
+  
+  .edit_profile {
+    position: absolute;
+    width: 100%;
+  }
+  
+  .edit_profile_r-container {
+    display: table;
+    width: 100%;
+    padding: 0px;
+  }
+  
+  .edit_profile_left {
+    display: table-cell;
+    vertical-align: top;
+    width: 65%;
+  }
+  
+  .edit_profile-card {
+    border-radius: 10px;
+    margin: auto;
+    text-align: left;
+    background-color: #64ffda;
+    padding: 25px;
+    width: 80%;
+  }
+  
+  .edit_profile-card h3 {
+    text-align: center;
+  }
+  
+  /* --- ADD OR EDIT WORKOUT & EXERCISE PAGE SETTINGS ---- */
+  
+  .add-workout {
+    position: absolute;
+    width: 100%;
+  }
+  
+  .add-workout_r-container {
+    display: table;
+    width: 100%;
+    padding: 0px;
+  }
+  
+  .add-workout_left {
+    display: table-cell;
+    vertical-align: top;
+    width: 65%;
+    text-align: center;
+  }
+  
+  .add-workout_left h3 {
+    text-align: center;
+  }
+  
+  .add-workout_left a:hover {
+    opacity: 0.7;
+  }
+  
+  .workout-card-items {
+    margin: auto;
+  }
+  
+  .request-card {
+    border-radius: 10px;
+    margin: auto;
+    text-align: center;
+    background-color: #64ffda;
+    padding: 5%;
+    width: 50%;
+    font-weight: bold;
+  }
+  
+  /* --- FORM SETTINGS ---- */
+    
+  label {
+    font-size: 18px;
+    color: #004d40;
+    font-weight: bold;
+    padding-left: 5px;
+  }
+  
+  .input-field label {
+    font-size: 22px;
+  }
+    
+  input[type=text] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    resize: vertical;
+  }
+  
+  input[type=email] {
+    width: 100%;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+  }
+  
+  input[type=password] {
+    width: 100%;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+  }
+  
+  input[type=date] {
+    color: #004d40;
+    width: 100%;
+    padding: 0px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+  }
+  
+  input[type=number] {
+    color: #004d40;
+    width: 100%;
+    padding: 0px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+  }
+  
+  input[type=file] {
+    width: 50%;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+  }
+  
+  input[type=checkbox] {
+    font-size: 16px;
+  }
+  
+  button[type=submit] {
+    background-color: #76ff03;
+    color: #004d40;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+  }
+    
+  button[type=submit]:hover {
+    color: #CBF83E;
+  }
+    
+  ::placeholder {
+    padding: 10px;
+    color: #004d40;
+    background-color: #ffffff;
+  }
+    
+  :-ms-input-placeholder {
+    padding: 10px;
+    color: #004d40;
+    background-color: #ffffff;
+  }
+    
+  ::-ms-input-placeholder {
+    padding: 10px;
+    color: #004d40;
+    background-color: #ffffff;
+  }
+  
+  /* --- BUTTONS ---- */
+  
+  
+  
+  /* --- MEMBER CARD STYLING ON ALL_USERS AND USER_CONNECTION PAGES ---- */
+  
+  .sort-box {
+    width: 10%;
+    display: inline-block;
+    margin-left: 85%;
+    margin-right: 5%;
+  }
+  
+  .members-card {
+    width: 80%;
+    margin:auto;
+    position: relative;
+    background-color: #64ffda;
+    border: 1px #00c853 solid;
+  }
+    
+  .members-card_r-container {
+    display: table;
+    width: 100%;
+    padding: 0px;
+    position: static;
+  }
+    
+  .members-card_left {
+    text-align: center;
+    display: table-cell;
+    width: 0%; /* Set to zero until profile pictures added in future release. */
+    position: relative;
+    height: 160px;
+  }
+    
+  .members-card_middle {
+    text-align:center;
+    display: table-cell;
+    width: 60%;
+    position: relative;
+    vertical-align: middle;
+    height: 160px;
+  }
+    
+  .members-card_right {
+    text-align: center;
+    display: table-cell;
+    width: 40%;
+    position: relative;
+    height: 160px;
+    vertical-align: middle;
+    padding-right: 0%;
+  }
+  
+  .member-card {
+    padding: 0;
+    margin:auto;
+  }
+  
+  .name {
+    font-size: 18px;
+  }
+  
+  ul.member-card {
+    list-style-type: none;
+    text-align: left;
+    margin-left: 10%;
+    padding: 5px;
+    background-color: #a7ffeb;
+    border: 1px #00c853 solid;
+  }
+  
+  .member-card buttons {
+    float: right;
+  }
+  
+  .member-card a {
+    float: right;
+  }
+  
+  /* --- FONT AWESOME STYLING ---- */
+  
+  .members-card_right .fa-user {
+    font-size: 24px;
+    padding-right: 20px;
+  }
+  
+  .members-card_right .fa-square-check {
+    font-size: 24px;
+    padding-right: 20px;
+  }
+  
+  .fa-user-circle {
+    font-size: 14px;
+    margin: 0px;
+    padding: 0px;
+  }
+  
+  .fa-pen-to-square{
+    font-size: 16px;
+  }
+  
+  .fa-trash-can {
+    font-size: 16px;
+  }
+  
+  .fa-heart-pulse {
+    color: #76ff03;
+    font-size: 158px;
+  }
+  
+  .fa-calendar-days {
+    color: #004d40;
+    font-size: 18px;
+  }
+  
+  .fa-stopwatch-20 {
+    color: #004d40;
+    font-size: 18px;
+  }
+  
+  .fa-weight-hanging {
+    color: #004d40;
+    font-size: 18px;
+  }
+  
+  .fa-dumbbell {
+    color: #004d40;
+    font-size: 18px;
+  }
+  
+  .fa-person-running {
+    color: #004d40;
+    font-size: 18px;
+  }
+  
+  .fa-circle-plus {
+    font-size: 28px;
+  }
+  
+  .fa-twitter {
+    color: #004d40;
+    font-size: 18px;
+    margin: 5px;
+  }
+  
+  .fa-facebook {
+    color: #004d40;
+    font-size: 18px;
+    margin: 5px;
+  }
+  
+  .fa-linkedin {
+    color: #004d40;
+    font-size: 18px;
+    margin: 5px;
+  }
+  
+  .fa-youtube {
+    color: #004d40;
+    font-size: 18px;
+    margin: 5px;
+    margin-bottom: 25px;
+  }
+  
+  .fa-instagram {
+    color: #004d40;
+    font-size: 18px;
+    margin: 5px;
+  }
+  
+  .fa-pinterest {
+    color: #004d40;
+    font-size: 18px;
+    margin: 5px;
+  }
+  
+  /* --- FOOTER PAGES SETTINGS ---- */
+  
+  .logo_link {
+    font-family: 'Do Hyeon', sans-serif;
+    color: yellow;
+    font-size: 36px;
+    background-color: navy;
+    text-decoration-line: none;
+    padding: 6px;
+    border-radius: 2px;
+  }
+  
+  a span {
+    text-decoration-line: underline;
+    text-decoration-thickness: 0.75vh;
+    font-style: italic;
+  }
+  
+  footer p {
+    color: #004d40;
+    font-weight: bold;
+  }
+  
+  article {
+    color: #004d40;
+    width: 100%;
+    padding: 1.25em;
+    margin: auto;
+    }
+    
+  article h2 {
+    padding: 10px;
+  }
+    
+  article h3 {
+    padding: 10px;
+    font-weight: bold;
+  }
+    
+  article h4 {
+    padding: 10px;
+    font-weight: bold;
+  }
+    
+  article p {
+    padding: 10px;
+    text-align: justify;
+    width: 100%;
+  }
+  
+  time {
+    color: #004d40;
+    font-weight: bold;
+  }
+  
+  article a {
+    color: #004d40;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+    
+  article ul {
+    text-align: justify;
+    margin-left: 5%;
+  }
+    
+  article ol {
+    text-align: justify;
+    margin-left: 5%;
+  }
+    
+  .important {
+    font-style: italic;
+    text-decoration-line: none;
+    font-weight: bold;
+  }
+    
+  section h3 {
+    font-weight: bold;
+  }
+    
+  summary {
+    font-weight: bold;
+    padding: 1rem;
+    text-align: left;
+  }
+    
+  details p {
+    padding-left: 30px;
+  }
+    
+  details a {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  /* --- 404 (CATCH_ALL PAGE) SETTINGS ---- */
+  
+  .main-404 {
+    width: 90%;
+    padding: 1.25em;
+    margin: auto;
+    text-align: center;
+  }
+  
+  .main-404 p {
+    margin: auto;
+    color: #004d40;
+    width: 60%;
+    font-size: 16px;
+    font-weight: bold;
+    padding-top: 0.925rem;
+  }
+  
+  .button-404 {
+    background-color: #64ffda;
+    display: inline-block;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .button-404 p {
+    color: #004d40;
+    font-size: 24px;
+    text-align: center;
+    font-weight: bold;
+    padding: 0;
+  }
+    
+  /* --- MEDIA QUERY SETTINGS (Enables stacking of divisions) ---- */
+  
+  @media screen and (max-width: 590px) {
+    .login_left, .login_middle, .login_right {
+      display: block;
+      width: 100%;
+    }
+    .login_right {
+      padding-right: 0%;
+      padding-top: 100px;
+      padding-bottom: 40px;
+    }
+    .signup_left, .signup_middle, .signup_right {
+      display: block;
+      width: 100%;
+    }
+    .signup_right {
+      padding-right: 0%;
+      padding-top: 100px;
+      padding-bottom: 40px;
+    }
+    .profile_left, .profile_middle, .profile_right {
+      display: block;
+      width: 100%;
+    }
+    .edit_profile_left, .edit_profile_middle, .edit_profile_right {
+      display: block;
+      width: 100%;
+    }
+    .add-workout_left, .add-workout_middle, .add-workout_right {
+      display: block;
+      width: 100%;
+    }
+    .workout-card-items {
+      width: 80%;
+    }
+    .row {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+  }
