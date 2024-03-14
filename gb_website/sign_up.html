@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+  {% block title %}
+  -- Join Us
+  {% endblock %}
+  {% block signupwide %}
+<!-- Jinja used to display alternative navbar text -->
+    <li class="right">
+      <a class="teal-text text-darken-4 bold" id="login" href="{{ url_for('auth.login') }}">
+        Login
+      </a>
+    </li>
+    <li class="right">
+      Already a member?
+    </li>
+  {% endblock %}
+  {% block signupnarrow %}
+    <li class="center">
+      Already a member? 
+      <a class="teal-text text-darken-4 bold" id="login" href="{{ url_for('auth.login') }}">
+        Login
+      </a>
+    </li>
+  {% endblock %}
+  {% block content %}
+<!-- Start of page -->
+  <div class="signup">
+<br>
+<br>
+<!-- Container for page - enables stacking of divs on small screen -->
+   <div class="signup_r-container">
+<!-- Start of left hand side of page -->
+    <div class="signup_left">
+      <div class="signup-card">
+<!-- Start of form -->
+        <form method="POST" enctype="multipart/form-data">
+          <h3>
+            Sign Up Here
+          </h3>
+            <label for="email">
+              Email Address
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter email.." 
+              autocomplete="on">
+            <label for="firstName">
+              First Name
+            </label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              placeholder="Enter first name..">
+            <label for="lastName">
+              Last Name
+            </label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              placeholder="Enter last name..">
+            <label for="password1">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password1"
+              name="password1"
+              placeholder="Enter password..">
+            <label for="password2">
+              Password (Confirm)
+            </label>
+            <input
+              type="password"
+              id="password2"
+              name="password2"
+              placeholder="Confirm password..">
+            <br>
+            <br>
+<!-- Submit Button -->
+              <button type="submit" class="btn btn-primary">
+                Submit
+              </button>
+        </form>
+<!-- End of sign up Form -->
+      </div>
+    <br>
+    <br>
+    </div>
+<!-- Start of right hand side content displaying logo -->
+    <div class="signup_right">
+      <i class="fa-solid fa-heart-pulse fa-bounce"></i>
+    </div>
+  {% endblock %}

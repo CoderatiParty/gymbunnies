@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" type="text/css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Tourney:ital,wght@0,500;1,700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='/css/styles.css') }}" type="text/css">
+        <title>GymBunnies{% block title %}{% endblock %}</title>
+    </head>
+    <body class="light-blue lighten-5">
+<!-- Start of navbar -->
+      <nav>
+        <div class="nav-wrapper light-green accent-3 teal-text text-darken-4">
+          <a href="{% if current_user.is_authenticated %}{{ url_for('views.home', user_id=current_user.id) }}{% else %}{{ url_for('views.home', user_id=0) }}{% endif %}" id="navLogo" class="brand-logo teal-text text-darken-4 center tourney-logo">
+            GymBunnies
+          </a>
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger teal-text text-darken-4">
+            <i class='fas fa-grip-lines teal-text text-darken-4'></i>
+          </a>
+<!-- Start of navbar links -->
+            <ul class="hide-on-med-and-down">
+<!-- Jinja used to vary display based on whether user is logged in... -->
+              {% if user.is_authenticated %}
+              <li>
+                <a class="teal-text text-darken-4 bold {% if request.path == url_for('views.home', user_id=current_user.id) %}active{% else %}{% endif %}" id="navHome" href="{{ url_for('views.home', user_id=current_user.id) }}">
+                  Your Profile
+                </a>
+              </li>
+              <li>
+                <a class="teal-text text-darken-4 bold {% if request.path == url_for('views.view_all_users') %}active{% else %}{% endif %}" id="navMembers" href="{{ url_for('views.view_all_users', user_id=current_user.id) }}">
+                  Members
+                </a>
+              </li>
+              <li>
+                <a class="teal-text text-darken-4 bold {% if request.path == url_for('views.connection_requests') %}active{% else %}{% endif %}" id="navMembers" href="{{ url_for('views.connection_requests', user_id=current_user.id) }}">
+                  Requests
+                </a>
+              </li>
+              <li class="right">
+                <a class="teal-text text-darken-4 bold" id="navLogout" href="{{ url_for('auth.logout', user_id=current_user.id) }}">
+                  <i class="far fa-user-circle"></i>
+                   Logout {{ current_user.first_name }}
+                </a>
+              </li>
+<!-- ... or not logged in -->
+              {% else %}
+              {% block signupwide %}
+              <li class="right"><a class="teal-text text-darken-4 bold" id="navSign" href="{{ url_for('auth.sign_up') }}">Sign Up</a></li>
+              <li class="right">Not a member?</li>
+              {% endblock %}
+              {% endif %}
+            </ul>
+        </div>
+      </nav>
+<!-- End of navbar, start of sidebar -->
+        <ul class="sidenav light-green accent-1" id="mobile-demo">
+<!-- Jinja used to vary display based on whether user is logged in... -->
+          {% if user.is_authenticated %}
+          <li>
+            <a class="teal-text text-darken-4 bold {% if request.path == url_for('views.home', user_id=current_user.id) %}active{% else %}{% endif %}" id="sideHome" href="{{ url_for('views.home', user_id=current_user.id) }}">
+              Your Profile
+            </a>
+          </li>
+          <li>
+            <a class="teal-text text-darken-4 bold {% if request.path == url_for('views.view_all_users') %}active{% else %}{% endif %}" id="sideMembers" href="{{ url_for('views.view_all_users', user_id=current_user.id) }}">
+              Members
+            </a>
+          </li>
+          <li>
+            <a class="teal-text text-darken-4 bold {% if request.path == url_for('views.connection_requests') %}active{% else %}{% endif %}" id="navMembers" href="{{ url_for('views.connection_requests', user_id=current_user.id) }}">
+              Requests
+            </a>
+          </li>
+          <li>
+            <a class="teal-text text-darken-4 bold" id="sideLogout" href="{{ url_for('auth.logout', user_id=current_user.id) }}">
+              Logout {{ current_user.first_name }}
+            </a>
+          </li>
+<!-- ... or not logged in -->
+          {% else %}
+          {% block signupnarrow %}
+          <li class="center">Not a member? 
+            <a class="teal-text text-darken-4 bold" id="sideSign" href="{{ url_for('auth.sign_up') }}">
+              Sign Up
+            </a>
+          </li>
+          {% endblock %}
+          {% endif %}
+        </ul>
+<!-- End of sidebar -->
+<!-- Jinja used to display flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+            <div class="flash {{ category }}" role="alert">
+              {{ message }}
+              <button type="button" class="close-alert">
+                <span aria-hidden="true">
+                  &times;
+                </span>
+                <span class="sr-only">
+                  Close
+                </span>
+              </button>
+            </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+<!-- Start of template content -->
+      <div>
+        {% block content %}
+  
+        {% endblock %}
+      </div>
+<!-- End of template content -->
+<!-- Start of footer -->
+      <footer class="page-footer light-green accent-1">
+<!-- Container to narrow content for presentation -->
+        <div class="container">
+<!-- Row to enable stacking on small devices -->
+          <div class="row valign-wrapper">
+<!-- Left footer column with company logo and slogan -->
+            <div class="col l6 s12 center-align">
+              <h1>
+                <a href="{% if current_user.is_authenticated %}{{ url_for('views.home', user_id=current_user.id) }}{% else %}{{ url_for('views.home', user_id=0) }}{% endif %}" id="footerLogo" class="teal-text text-darken-4 tourney-logo">
+                  GymBunnies
+                </a>
+              </h1>
+                <p class="teal-text text-darken-4 bold slogan">
+                  Track and share your workout routine
+                </p>
+                <br>
+<!-- Breaks to address alignment issues -->
+                <br>
+            </div>
+<!-- Right footer column with corporate page links -->
+            <div class="col l4 offset-l2 s12">
+              <h6 class="teal-text text-darken-4 bold">
+                Corporate Pages
+              </h6>
+              <ul>
+                <li>
+                  <a class="teal-text text-darken-4 {% if request.path == url_for('views.faq') %}active{% else %}{% endif %}" href="{{ url_for('views.faq') }}" aria-label="A link to GymBunnies' FAQ page">
+                    FAQs
+                  </a>
+                </li>
+                <li>
+                  <a class="teal-text text-darken-4 {% if request.path == url_for('views.press') %}active{% else %}{% endif %}" href="{{ url_for('views.press') }}" aria-label="A link to GymBunnies' press releases page">
+                    Press Releases
+                  </a>
+                </li>
+                <li>
+                  <a class="teal-text text-darken-4 {% if request.path == url_for('views.user_agreement') %}active{% else %}{% endif %}" href="{{ url_for('views.user_agreement') }}" aria-label="A link to GymBunnies' User Agreement page">
+                    User Agreement
+                  </a>
+                </li>
+                <li>
+                  <a class="teal-text text-darken-4 {% if request.path == url_for('views.privacy') %}active{% else %}{% endif %}" href="{{ url_for('views.privacy') }}" aria-label="A link to GymBunnies' Privacy Statement page">
+                    Privacy Statement
+                  </a>
+                </li>
+              </ul>
+              <br>
+              <p>In partnership with <a class='logo_link' href='https://rchrdmess.github.io/MS2_macroBLASTER/index.htm' aria-label="A link to macroBLASTER's home page" target="_blank"><sub>macro</sub><span>BLASTER</span></a></p>
+            </div>
+          </div>
+<!-- Centred social media links -->
+          <div class="center">
+            <a href="https://twitter.com/" target="_blank" aria-label="Go to our twitter page (opens in new tab)">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://facebook.com/" target="_blank" aria-label="Go to our facebook page (opens in new tab)">
+              <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://linkedin.com/" target="_blank" aria-label="Go to our LinkedIn page (opens in new tab)">
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://youtube.com/" target="_blank" aria-label="Go to our youtube page (opens in new tab)">
+              <i class="fab fa-youtube"></i>
+            </a>
+            <a href="https://instagram.com/" target="_blank" aria-label="Go to our instagram page (opens in new tab)">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://pinterest.com/" target="_blank" aria-label="Go to our Pinterest page (opens in new tab)">
+              <i class="fab fa-pinterest"></i>
+            </a>
+          </div>
+        </div>
+<!-- Rights assertion -->
+        <div class="footer-copyright light-green accent-3 center">
+          <p class="container teal-text text-darken-4">
+            Copyright &copy; 
+            <span class="tourney-logo">
+              GymBunnies
+            </span>
+            <span id="copyright"></span>
+          </p>
+        </div>
+      </footer>
+<!-- Tags for Javascript links -->
+      <script
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous">
+      </script>
+      <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous">
+      </script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js">
+      </script>
+      <script src="{{ url_for('static', filename='/js/script.js') }}">
+      </script>
+    </body>
+  </html>

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+  {% block title %}
+   -- Ooops!
+  {% endblock %}
+  {% block navbar %}
+  {% endblock %}
+  {% block content %}
+<!-- Start of page -->
+  <div class="main-404 container">
+    <br>
+    <br>
+    <br>
+      <p>
+        OOPS ...
+      </p>
+      <p>
+        The page you were looking for doesn't exist.
+      </p>
+    <br>
+    <br>
+      <a href="{{ url_for('views.home', user_id=current_user.id) }}" aria-label="A link to GymBunnies's home page">
+        <div role="button" class="button-404" id="male">
+          <p>
+            Take me home
+          </p>
+        </div>
+      </a>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  </div>
+{% endblock %}

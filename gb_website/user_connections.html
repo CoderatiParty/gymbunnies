@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+  {% block title %}
+   -- {{ user.first_name }}'s Connections
+  {% endblock %}
+  {% block navbar %}  
+  {% endblock %}
+  {% block content %}
+<!-- Start of page -->
+  <div class="profile">
+    <div class="profile">
+      <!-- Container for page - enables stacking of divs on small screen -->
+    <div class="profile_r-container">
+<!-- Start of left hand side of page -->
+      <div class="profile_left">
+        <h3>
+          {{ user.first_name }}'s Connections
+        </h3>
+<!-- Sort Box to organise members list -->
+            <div class="sort-box">
+              <form id="sort-form" action="{{ url_for('views.view_all_users') }}" method="GET">
+                <select name="sort_option" onchange="this.form.submit()">
+                  <option value="">Sort</option>
+                  <option value="name_asc">Name (A-Z)</option>
+                  <option value="name_desc">Name (Z-A)</option>
+                  <option value="workouts_asc">Workouts (0-10)</option>
+                  <option value="workouts_desc">Workouts (10-0)</option>
+                </select>
+              </form>
+            </div>
+<!-- Start of template for member card -->
+<!-- Jinja used to display user generated content -->
+              {% for connected_user in connected_users %}
+                <div class="members-card">
+<!-- Container for card -->
+                  <div class="members-card_r-container">
+<!-- Start of column 1 within the card -->
+                    <div class="members-card_left">
+<!-- Left column blank until profile picture feature introduced -->
+                    </div>
+<!-- End of column 1 start of column 2. -->
+                    <div class="members-card_middle">
+<!-- User's name, site stats and gym displayed -->
+                      <ul class="member-card bold">
+                        <li class="name">
+                          {{ connected_user.first_name }}
+                        </li>
+                        <li>
+                          <p>
+                            {{ connected_user.first_name }}'s Workouts: {{ total_workouts[connected_user.id] }}
+                          </p>
+                        </li>
+                        <li>
+                          <p>
+                            Gym: {{ connected_user.gym }}
+                          </p>
+                        </li>
+                      </ul>
+                    </div>
+<!-- End of column 2 start of column 3. -->
+<!-- Only 'view profile' buttons reuired on this page -->
+                    <div class="members-card_right">
+                      <a href="{{ url_for('views.home', user_id=connected_user.id) }}" class="btn light-green accent-3 btn-primary teal-text text-darken-4">
+                        View
+                      </a>
+                    </div>
+                  </div>
+<!-- End of subsection container. -->
+                </div>
+              <br>
+<!-- Breaks within jijna for loop to separate member's cards -->
+              <br>
+              {% endfor %}
+            <br>
+            <br>
+      </div>
+<!-- Start of right hand side content -->
+      <div class="profile_right">
+    <br>
+    <br>
+<!-- User's personal info box -->
+        <div class="user-card bold">
+<!-- Jinja used to display user's details if provided -->
+          <h5>
+            {{user.first_name}} {{user.last_name}}
+          </h5>
+<!-- If gym not provided, jinja used to hide display -->
+          {% if user.gym %}
+          <p>
+            Gym: {{ user.gym }}
+          </p>
+          {% endif %}
+<!-- If DOB not provided, jinja used to hide display -->
+          {% if user.calculate_age() %}
+            <p>
+              Age: {{ user.calculate_age() }}
+            </p>
+          {% endif %}
+<!-- If user viewing profile is not a connection, jinja used to hide display -->
+          {% if user.id == current_user.id or user_is_connected  %}
+<!-- If phone number not provided, jinja used to hide display -->
+            {% if user.phone %}
+<!-- If connected user viewing on phone, jinja used to enable phone link -->
+              {% if is_mobile %}
+                <p>
+                  Phone: <a href=”tel:{{ user.phone }}">
+                    {{ user.phone }}
+                  </a>
+                </p>
+              {% else %}
+<!-- If connected user viewing on computer, jinja used to disable phone link -->
+                {{ user.phone }}
+              {% endif %}
+            {% endif %}
+          {% endif %}
+        </div>
+      <br>
+<!-- User's site info box -->
+        <div class="stats-card">
+          <p>
+            <a href="{{ url_for('views.view_user_connections', user_id=user.id) }}">
+<!-- Jinja used to display user's site stats -->
+              {{ user.first_name }}'s Connections
+            </a>
+            : {{ total_user_connections }}
+          </p>
+          <p>
+            {{ user.first_name }}'s Workouts : {{ total_workouts[user.id] }}
+          </p>
+        </div>
+<!-- Jinja used to display button to enable user to update profile -->
+          {% if user.id == current_user.id %}
+            <a href="{{ url_for('views.edit_user', user_id=current_user.id) }}" type="submit" class="btn btn-primary">
+              Update Profile
+            </a>
+          {% else %}
+            {% if user_is_connected %}
+<!-- If profile being visited by connected user, Jinja used to display button to enable vistor to disconnect from user -->
+              <form action="{{ url_for('views.remove_connection') }}" method="POST">
+                <input type="hidden" name="connected_user_id[]" value="{{ user.id }}">
+                  <button type="submit" class="btn red darken-4 white-text">
+                    Remove {{ user.first_name }}
+                  </button>
+              </form>
+              {% else %}
+<!-- If profile being visited by unconnected user, Jinja used to display button to enable vistor to connect with user -->
+              {% if connection_request_sent %}
+                <p>
+                  Request Sent
+                </p>
+              {% else %}
+<!-- Jinja used to notify visitor of an incoming connection request from profile owner -->
+                {% if pending_connection_request %}
+                  <p>
+                    Pending Request
+                  </p>
+                {% else %}
+<!-- If profile being visited by unconnected user, Jinja used to display button to enable vistor to connect with user -->
+                <form action="{{ url_for('views.add_connection') }}" method="POST">
+                  <input type="hidden" name="connected_user_id" value="{{ user.id }}">
+                    <button type="submit" class="btn btn-primary">
+                      Connect with {{ user.first_name }}
+                    </button>
+                  </form>
+                {% endif %}
+              {% endif %}
+            {% endif %}
+          {% endif %}
+        <br>
+        <br>
+        </div>
+  {% endblock %}

@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+  {% block title %}
+   -- Edit Workout
+  {% endblock %}
+  {% block navbar %}         
+  {% endblock %}
+  {% block content%}
+<!-- Start of page -->
+  <div class="add-workout">
+<!-- Container for page - enables stacking of divs on small screen -->
+    <div class="add-workout_r-container">
+<!-- Start of left hand side of page -->
+      <div class="add-workout_left">
+        <h3>
+          Edit Workout
+        </h3>
+<!-- Edit workout form starts here -->
+          <div class="container workout-card-items left-align card-panel grey lighten-5">
+            <form id="workoutForm" method="POST" action="{{ url_for('views.edit_workout', workout_id=workout.id) }}">
+<!-- Workout Date -->
+              <div class="row">
+                <div class="input-field">
+                  <i class="fa-regular fa-calendar-days prefix"></i>
+                    <label for="workoutDate">
+                      Date
+                    </label>
+                  <br>
+                    <input
+                    type="date"
+                    required
+                    id="workoutDate"
+                    name="workoutDate"
+                    value="{{ workout.workout_date }}">
+                </div>
+              </div>
+<!-- Workout Type -->
+              <div class="row">
+                <div class="input-field">
+                  <i class="fa-solid fa-heart-pulse prefix"></i>
+                    <label for="workoutType">
+                      Routine
+                    </label>
+                  <br>
+                  <br>
+                    <select id="workoutType" name="workoutType">
+<!-- Jinja used to place stored value into form from database options -->
+                      <option value="select" {% if workout.workout_type == "select" %}selected{% endif %}>Select Workout</option>
+                      <option value="Arms" {% if workout.workout_type == "Arms" %}selected{% endif %}>Arms</option>
+                      <option value="Back" {% if workout.workout_type == "Back" %}selected{% endif %}>Back</option>
+                      <option value="Cardio" {% if workout.workout_type == "Cardio" %}selected{% endif %}>Cardio</option>
+                      <option value="Chest" {% if workout.workout_type == "Chest" %}selected{% endif %}>Chest</option>
+                      <option value="Core" {% if workout.workout_type == "Core" %}selected{% endif %}>Core</option>
+                      <option value="Fullbody" {% if workout.workout_type == "Fullbody" %}selected{% endif %}>Fullbody</option>
+                      <option value="Legs" {% if workout.workout_type == "Legs" %}selected{% endif %}>Legs</option>
+                      <option value="Lower" {% if workout.workout_type == "Lower" %}selected{% endif %}>Lower</option>
+                      <option value="Pull" {% if workout.workout_type == "Pull" %}selected{% endif %}>Pull</option>
+                      <option value="Push" {% if workout.workout_type == "Push" %}selected{% endif %}>Push</option>
+                      <option value="Upper" {% if workout.workout_type == "Upper" %}selected{% endif %}>Upper</option>
+                    </select>
+                  <br>
+                </div>
+              </div>
+<!-- Workout Duration -->
+              <div class="row">
+                <div class="input-field">
+                  <i class="fa-solid fa-stopwatch-20 prefix"></i>
+                    <label for="workoutDuration">
+                      Duration (mins)
+                    </label>
+                  <br>
+                    <input  
+                    id="workoutDuration" 
+                    name="workoutDuration" 
+                    minlength="1" 
+                    maxlength="10" 
+                    type="number" 
+                    value="{{ workout.workout_duration }}">
+                </div>
+              </div>
+<!-- Submit Button -->
+              <div class="row">
+                <div class="center-align">
+              <br>
+                <button type="submit" class="btn light-green accent-3 left btn-primary">
+                  Update
+                </button>
+<!-- Cancel Button -->
+                <button type="submit" class="btn blue-grey darken-2 white-text right btn-primary" id="cancelButton">
+                  Cancel
+                </button>
+              <br>
+              </br>
+                </div>
+              </div>
+<!-- End of form -->
+            </form>
+          </div>
+        <br>
+        <br>
+<!-- Delete Workout Button -->
+          <a href="#modal-{{ workout.id }}" class="btn btn-primary red darken-4 white-text modal-trigger">Delete Workout</a>
+        <br>
+        <br>
+<!-- Modal Structure -->
+          <div id="modal-{{ workout.id }}" class="modal">
+            <div class="modal-content">
+              <h4>
+                Delete this Workout?
+              </h4>
+                <p>
+                  This action cannot be undone.
+                </p>
+                <p>
+                  ALL ASSOCIATED EXERCISES WILL BE LOST!
+                </p>
+            </div>
+            <div class="modal-footer">
+<!-- Cancel Link -->
+              <a href="#" class="btn green accent-4 modal-close">
+                Cancel
+              </a>
+<!-- Confirm Delete Link -->
+              <a href="{{ url_for('views.delete_workout', workout_id=workout.id) }}" class="btn red">
+                Delete
+              </a>
+            </div>
+          </div>
+        <br>
+        <br>
+      </div>
+<!-- Start of right hand side content -->
+      <div class="profile_right">
+    <br>
+    <br>
+<!-- User's personal info box -->
+      <div class="user-card bold">
+<!-- Jinja used to display user's details if provided -->
+        <h6>
+          {{user.first_name}} {{user.last_name}}
+        </h6>
+        {% if user.gym %}
+        <p>
+          Gym: {{ user.gym }}
+        </p>
+        {% endif %}
+        {% if user.calculate_age() %}
+          <p>
+            Age: {{ user.calculate_age() }}
+          </p>
+        {% endif %}
+        {% if user.phone %}
+          <p>
+            Phone: {{ user.phone }}
+          </p>
+        {% endif %}
+      </div>
+    <br>
+<!-- User's site info box -->
+      <div class="stats-card bold">
+        <p>
+          <a href="{{ url_for('views.view_user_connections', user_id=user.id) }}">
+<!-- Jinja used to display user's site stats -->
+            {{ user.first_name }}'s Connections
+          </a>
+            : {{ total_user_connections }}
+        </p>
+        <p>
+          {{ user.first_name }}'s Workouts: {{ total_workouts }}
+        </p>
+      </div>
+<!-- Link to enable user to edit their profile -->
+        <a href="{{ url_for('views.edit_user', user_id=current_user.id) }}" type="submit" class="btn btn-primary">
+          Edit Profile
+        </a>
+<!-- End of right hand side content -->
+      </div>
+  {% endblock %}

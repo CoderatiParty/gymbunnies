@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+  {% block title %}
+   -- Update Your Profile
+  {% endblock %}
+  {% block navbar %}    
+  {% endblock %}
+  {% block content%}
+<!-- Start of page -->
+  <div class="edit_profile">
+<!-- Container for page - enables stacking of divs on small screen -->
+    <div class="edit_profile_r-container">
+<!-- Start of left hand side content -->
+     <div class="edit_profile_left">
+      <h3 align="center">
+        Update Profile
+      </h3>
+<!-- Update profile form starts here -->
+<!-- Value attribute passes db data to form -->
+        <div class="edit_profile-card">
+          <form method="POST" action="{{ url_for('views.edit_user', user_id=current_user.id) }}" enctype="multipart/form-data">
+<!-- First Name Input -->
+            <label for="firstName">
+              First Name
+            </label>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                value="{{ user.first_name }}">
+<!-- Last Name Input -->
+              <label for="lastName">
+                Last Name
+              </label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                value="{{ user.last_name }}">
+<!-- Date of birth Input -->
+              <label for="dob">
+                Date of Birth
+              </label>
+              <input
+                type="date"
+                id="dob"
+                name="dob" 
+                value="{{ user.date_of_birth }}">
+<!-- Email Address Input -->
+              <label for="email">
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value="{{ user.email }}" >
+<!-- Phone Number Input -->
+              <label for="phone">
+                Phone Number
+              </label>
+              <input
+                type="text"
+                id="phone"
+                name="phone"
+                placeholder="01234567890" 
+                value="{{ user.phone }}" 
+                autocomplete="on">
+<!-- Gym Input -->
+              <label for="gym">
+                Your Gym
+              </label>
+              <input
+                type="text"
+                id="gym"
+                name="gym"
+                placeholder="Enter your gym" 
+                value="{{ user.gym }}">
+              <br>
+              <br>
+<!-- Submit Button -->
+                <button type="submit" class="btn light-green accent-3 left btn-primary">
+                  Update
+                </button>
+<!-- Cancel Button -->
+                <button type="submit" class="btn blue-grey darken-2 white-text right btn-primary" id="cancelButton">
+                  Cancel
+                </button>
+              <br>
+              <br>
+<!-- End of form -->
+          </form>
+        </div>
+      <br>
+      <br>
+    </div>
+<!-- Start of right hand side content -->
+    <div class="profile_right">
+  <br>
+  <br>
+<!-- User's personal info box -->
+      <div class="user-card">
+<!-- Jinja used to display user's details if provided -->
+        <h6>
+          {{user.first_name}} {{user.last_name}}
+        </h6>
+        {% if user.gym %}
+        <p>
+          Gym: {{ user.gym }}
+        </p>
+        {% endif %}
+        {% if user.calculate_age() %}
+        <p>
+          Age: {{ user.calculate_age() }}
+        </p>
+        {% endif %}
+        {% if user.phone %}
+          <p>Phone: {{ user.phone }}</p>
+        {% endif %}
+      </div>
+    <br>
+<!-- User's site info box -->
+      <div class="stats-card bold">
+<!-- Jinja used to display user's site stats -->
+        <p>
+          <a href="{{ url_for('views.view_user_connections', user_id=user.id) }}">
+            {{ user.first_name }}'s Connections
+          </a>
+          : {{ total_user_connections }}
+        </p>
+        <p>
+          {{ user.first_name }}'s Workouts : {{ total_workouts }}
+        </p>
+      </div>
+    <br>
+    <br>
+<!-- These breaks used to separate delete button from edit profile button on previous page -->
+    <br>
+    <br>
+<!-- Delete Profile Button -->
+      <a href="#modal-{{ user.id }}" class="btn red darken-4 white-text modal-trigger">
+        Delete Profile
+      </a>
+<!-- Modal Structure -->
+      <div id="modal-{{ user.id }}" class="modal">
+        <div class="modal-content">
+          <h4>
+            DELETE YOUR ACCOUNT?
+          </h4>
+          <h5>
+            THIS ACTION CANNOT BE UNDONE!
+          </h5>
+          <h5>
+            ALL DATA WILL BE LOST!
+          </h5>
+        </div>
+      <div class="modal-footer">
+<!-- Cancel Link -->
+        <a href="#" class="btn green accent-4 modal-close">
+          Cancel
+        </a>
+<!-- Confirm Delete Link -->
+        <a href="{{ url_for('views.delete_user', user_id=current_user.id) }}" class="btn red">
+          Delete
+        </a>
+      </div>
+<!-- End of Modal Structure -->
+    </div>
+  </div>
+  {% endblock %}

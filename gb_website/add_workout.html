@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+  {% block title %}
+   -- Add A Workout
+  {% endblock %}
+  {% block navbar %}
+  {% endblock %}
+  {% block content %}
+<!-- Start of page -->
+  <div class="add-workout">
+<!-- Container for page - enables stacking of divs on small screen -->
+    <div class="add-workout_r-container">
+<!-- Start of left hand side content -->
+      <div class="add-workout_left">
+<!-- Add workout form starts here -->
+        <h3>Add Workout</h3>
+          <div class="container workout-card-items left-align card-panel grey lighten-5">
+            <form id="workoutForm" method="POST" action="{{ url_for('views.add_workout', user_id=current_user.id) }}">
+<!-- Workout Date Input -->
+                <div class="input-field">
+                  <i class="fa-regular fa-calendar-days prefix"></i>
+                    <label for="workoutDate">
+                      Date
+                    </label>
+                  <br>
+                  <br>
+                    <input
+                    type="date"
+                    id="workoutDate"
+                    name="workoutDate"
+                    required>
+                </div>
+<!-- Workout Type Input -->
+                <div class="row">
+                  <div class="input-field">
+                    <i class="fa-solid fa-heart-pulse prefix"></i>
+                      <label for="workoutType">
+                        Workout
+                      </label>
+                    <br>
+                    <br>
+                      <select id="workoutType" name="workoutType">
+                        <option value="select">Select Workout</option>
+                        <option value="Arms">Arms</option>
+                        <option value="Back">Back</option>
+                        <option value="Cardio">Cardio</option>
+                        <option value="Chest">Chest</option>
+                        <option value="Core">Core</option>
+                        <option value="Fullbody">Fullbody</option>
+                        <option value="Legs">Legs</option>
+                        <option value="Lower">Lower</option>
+                        <option value="Pull">Pull</option>
+                        <option value="Push">Push</option>
+                        <option value="Upper">Upper</option>
+                      </select>
+                    <br>
+                  </div>
+                </div>
+<!-- Workout Duration Input -->
+                <div class="row">
+                  <div class="input-field">
+                    <i class="fa-solid fa-stopwatch-20 prefix"></i>
+                      <label for="workoutDuration">
+                        Duration (mins)
+                      </label>
+                    <br>
+                      <input  
+                      id="workoutDuration" 
+                      name="workoutDuration" 
+                      minlength="1" 
+                      maxlength="10" 
+                      type="number" 
+                      placeholder="123">
+                  </div>
+                </div>
+              <br>
+          </div>
+        <br>
+<!-- Break in form to visually separate workouts from exercises -->
+        <br>
+          <div class="container workout-card-items left-align card-panel grey lighten-5">
+<!-- Exercise Input -->
+            <div class="row">
+              <div class="input-field">
+                <i class="fa-solid fa-heart-pulse prefix"></i>
+                  <label for="exerciseType">
+                    Add Exercise
+                  </label>
+                <br>
+                  <input
+                  type="text"
+                  id="exerciseType"
+                  name="exerciseType"
+                  minlength="1" 
+                  maxlength="30"
+                  placeholder="Eg. Star Jumps"
+                  required>
+              </div>
+            </div>
+<!-- Weight Input -->
+            <div class="row">
+              <div class="input-field">
+                <i class="fa-solid fa-weight-hanging prefix"></i>
+                  <label for="weight">
+                    Weight (Kg)
+                  </label>
+                <br>
+                  <input 
+                  id="weight" 
+                  name="weight" 
+                  minlength="1" 
+                  maxlength="3" 
+                  type="number" 
+                  placeholder="(Optional)">
+              </div>
+            </div>
+<!-- Reps Input -->
+            <div class="row">
+              <div class="input-field">
+                <i class="fa-solid fa-dumbbell prefix"></i>
+                  <label for="reps">
+                    Reps
+                  </label>
+                <br>
+                  <input 
+                  id="reps" 
+                  name="reps" 
+                  minlength="1" 
+                  maxlength="2" 
+                  placeholder="(Optional)" 
+                  type="number">
+              </div>
+            </div>
+<!-- Sets Input -->
+            <div class="row">
+              <div class="input-field">
+                <i class="fa-solid fa-dumbbell prefix"></i>
+                  <label for="sets">
+                    Sets
+                  </label>
+                <br>
+                  <input 
+                  id="sets" 
+                  name="sets" 
+                  minlength="1" 
+                  maxlength="2" 
+                  placeholder="(Optional)" 
+                  type="number">
+              </div>
+            </div>
+<!-- Distance Input -->
+            <div class="row">
+              <div class="input-field">
+                <i class="fa-solid fa-person-running prefix"></i>
+                  <label for="distance">
+                    Distance (m)
+                  </label>
+                <br>
+                  <input 
+                  id="distance" 
+                  name="distance" 
+                  minlength="1" 
+                  maxlength="5" 
+                  type="number" 
+                  placeholder="(Optional)">
+              </div>
+            </div>
+<!-- Submit Button -->
+            <div class="row">
+              <div class="center-align">
+            <br>
+              <button type="submit" class="btn light-green accent-3 left btn-primary">
+                Add
+              </button>
+<!-- Cancel Button -->
+              <button type="submit" class="btn grey lighten-1 right btn-primary" id="cancelButton">
+                Cancel
+              </button>
+            <br>
+            </br>
+            </div>
+          </div>
+      </div>
+<!-- End of form -->
+    </form>
+  <br>
+  <br>
+      </div>
+<!-- Start of right hand side content -->
+      <div class="profile_right">
+    <br>
+    <br>
+<!-- User personal info box -->
+        <div class="user-card bold">
+          <h6>{{user.first_name}} {{user.last_name}}</h6>
+<!-- Jinja used to display user's details -->
+          {% if user.gym %}
+            <p>Gym: {{ user.gym }}</p>
+          {% endif %}
+          {% if user.calculate_age() %}
+            <p>Age: {{ user.calculate_age() }}</p>
+          {% endif %}
+          {% if user.phone %}
+            <p>Phone: {{ user.phone }}</p>
+          {% endif %}
+        </div>
+      <br>
+<!-- User's site info box -->
+        <div class="stats-card bold">
+          <p>
+            <a href="{{ url_for('views.view_user_connections', user_id=user.id) }}">
+<!-- Jinja used to display user's site stats -->
+              {{ user.first_name }}'s Connections</a>: {{ total_user_connections }}
+          </p>
+          <p>
+            {{ user.first_name }}'s Workouts: {{ total_workouts }}
+          </p>
+        </div>
+<!-- Button to allow user to edit their profile -->
+          <a href="{{ url_for('views.edit_user', user_id=current_user.id) }}" type="submit" class="btn btn-primary">
+            Edit Profile
+          </a>
+<!-- End of right hand side content -->
+        </div>
+{% endblock %}

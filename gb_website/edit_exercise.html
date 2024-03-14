@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+  {% block title %}
+   -- Edit Exercise
+  {% endblock %}
+  {% block navbar %}
+  {% endblock %}
+  {% block content %}
+<!-- Start of page -->
+  <div class="add-workout">
+<!-- Container for page - enables stacking of divs on small screen -->
+    <div class="add-workout_r-container">
+<!-- Start of left hand side content -->
+      <div class="add-workout_left">
+<!-- Add exercise form starts here -->
+        <h3>
+          Edit Exercise
+        </h3>
+          <div class="container workout-card-items left-align card-panel grey lighten-5">
+            <form id="exerciseForm" method="POST" action="{{ url_for('views.edit_exercise', exercise_id=exercise.id) }}">
+<!-- Exercise Input -->
+<!-- Value attribute passes db data to form -->
+              <div class="row">
+                <div class="input-field">
+                  <i class="fa-solid fa-heart-pulse prefix"></i>
+                    <label for="exerciseType">
+                      Exercise
+                    </label>
+                  <br>
+                    <input
+                    type="text"
+                    id="exerciseType"
+                    name="exerciseType"
+                    minlength="1" 
+                    maxlength="30"
+                    value="{{ exercise.exercise_type }}" 
+                    required>
+                </div>
+              </div>
+<!-- Weight Input -->
+              <div class="row">
+                <div class="input-field">
+                  <i class="fa-solid fa-weight-hanging prefix"></i>
+                    <label for="weight">
+                      Weight (Kg)
+                    </label>
+                  <br>
+                    <input 
+                    id="weight" 
+                    name="weight" 
+                    minlength="1" 
+                    maxlength="3" 
+                    type="number" 
+                    value="{{ exercise.weight }}">
+                </div>
+              </div>
+<!-- Reps Input -->
+              <div class="row">
+                <div class="input-field">
+                  <i class="fa-solid fa-dumbbell prefix"></i>
+                    <label for="reps">
+                      Reps
+                    </label>
+                  <br>
+                    <input 
+                    id="reps" 
+                    name="reps" 
+                    minlength="1" 
+                    maxlength="2" 
+                    value="{{ exercise.reps }}" 
+                    type="number">
+                </div>
+              </div>
+<!-- Sets Input -->
+              <div class="row">
+                <div class="input-field">
+                  <i class="fa-solid fa-dumbbell prefix"></i>
+                    <label for="sets">Sets</label>
+                  <br>
+                    <input 
+                    id="sets" 
+                    name="sets" 
+                    minlength="1" 
+                    maxlength="2" 
+                    value="{{ exercise.sets }}" 
+                    type="number">
+                </div>
+              </div>
+<!-- Distance Input -->
+              <div class="row">
+                <div class="input-field">
+                  <i class="fa-solid fa-person-running prefix"></i>
+                    <label for="distance">Distance (m)</label>
+                  <br>
+                    <input 
+                    id="distance" 
+                    name="distance" 
+                    minlength="1" 
+                    maxlength="5" 
+                    type="number" 
+                    value="{{ exercise.distance }}">
+                </div>
+              </div>
+<!-- Submit Button -->
+              <div class="row">
+                <div class="center-align">
+              <br>
+                <button type="submit" class="btn light-green accent-3 left btn-primary">
+                  Update
+                </button>
+<!-- Cancel Button -->
+                <button type="submit" class="btn blue-grey darken-2 white-text right btn-primary" id="cancelButton">
+                  Cancel
+                </button>
+              <br>
+              </br>
+                </div>
+              </div>
+<!-- End of form -->
+            </form>
+          </div>
+        <br>
+        <br>
+<!-- Delete Exercise Button -->
+          <a href="#modal-{{ exercise.id }}" class="btn btn-primary red darken-4 white-text modal-trigger">
+            Delete Exercise
+          </a>
+        <br>
+        <br>
+<!-- Modal Structure -->
+          <div id="modal-{{ exercise.id }}" class="modal">
+            <div class="modal-content">
+              <h4>
+                Delete this Exercise?
+              </h4>
+                <p>
+                  This action cannot be undone.
+                </p>
+            </div>
+            <div class="modal-footer">
+<!-- Cancel Link -->
+              <a href="#" class="btn green accent-4 modal-close">
+                Cancel
+              </a>
+<!-- Confirm Delete Link -->
+              <a href="{{ url_for('views.delete_exercise', exercise_id=exercise.id) }}" class="btn red">
+                Delete
+              </a>
+            </div>
+          </div>
+        <br>
+        <br>
+      </div>
+<!-- Start of right hand side content -->
+      <div class="profile_right">
+    <br>
+    <br>
+<!-- User's personal info box -->
+        <div class="user-card bold">
+<!-- Jinja used to display user's details if provided -->
+          <h6>
+            {{user.first_name}} {{user.last_name}}
+          </h6>
+          {% if user.gym %}
+            <p>
+              Gym: {{ user.gym }}
+            </p>
+          {% endif %}
+          {% if user.calculate_age() %}
+            <p>
+              Age: {{ user.calculate_age() }}
+            </p>
+          {% endif %}
+          {% if user.phone %}
+            <p>
+              Phone: {{ user.phone }}
+            </p>
+          {% endif %}
+        </div>
+      <br>
+<!-- User's site info box -->
+        <div class="stats-card bold">
+          <p>
+            <a href="{{ url_for('views.view_user_connections', user_id=user.id) }}">
+<!-- Jinja used to display user's site stats -->
+              {{ user.first_name }}'s Connections
+            </a>
+              : {{ total_user_connections }}
+          </p>
+          <p>
+            {{ user.first_name }}'s Workouts : {{ total_workouts }}
+          </p>
+        </div>
+<!-- Link to enable user to edit their profile -->
+          <a href="{{ url_for('views.edit_user', user_id=current_user.id) }}" type="submit" class="btn btn-primary">
+            Edit Profile
+          </a>
+<!-- End of right hand side content -->
+      </div>
+  {% endblock %}

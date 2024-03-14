@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+  {% block title %}
+     -- Members
+  {% endblock %}
+  {% block navbar %}  
+  {% endblock %}
+  {% block content %}
+<!-- Start of page -->
+  <div class="profile">
+<!-- Container for page - enables stacking of divs on small screen -->
+    <div class="profile_r-container">
+<!-- Start of left hand side of page -->
+      <div class="profile_left">
+<!-- Jinja function to transfer flash messages from connection routing to template -->
+        {% if 'flash_messages' in session %}
+          {% for message in session['flash_messages'] %}
+            <div class="alert alert-{{ message[1] }}" role="alert">
+              {{ message[0] }}
+            </div>
+          {% endfor %}
+            {% set _ = session.pop('flash_messages', None) %}
+        {% endif %}
+<!-- Start of left hand side content -->
+           <h3>
+            Meet Our Members
+          </h3>
+<!-- Sort Box to organise members list -->
+            <div class="sort-box">
+              <form id="sort-form" action="{{ url_for('views.view_all_users') }}" method="GET">
+                <select name="sort_option" onchange="this.form.submit()">
+                  <option value="">Sort</option>
+                  <option value="name_asc">Name (A-Z)</option>
+                  <option value="name_desc">Name (Z-A)</option>
+                  <option value="workouts_asc">Workouts (0-10)</option>
+                  <option value="workouts_desc">Workouts (10-0)</option>
+                </select>
+              </form>
+            </div>
+<!-- Start of template for member card -->
+<!-- Jinja used to display user generated content -->
+          {% for user in users %}
+            <div class="members-card">
+<!-- Container for card -->
+              <div class="members-card_r-container">
+<!-- Start of column 1 within the card -->
+                <div class="members-card_left">
+<!-- Left column blank until profile picture feature introduced -->
+                </div>
+<!-- End of column 1 start of column 2 -->
+                <div class="members-card_middle">
+<!-- User's name, site stats and gym displayed -->
+                  <ul class="member-card bold">
+                    <li class="name">
+                      {{ user.first_name }}</li>
+                    <li>
+                      <p>
+                        Workouts: {{ total_workouts[user.id] }}
+                      </p>
+                    </li>
+                    <li>
+                        {% if user.gym %}
+                          <p>
+                            Gym: {{ user.gym }}
+                          </p>
+                        {% endif %}
+                    </li>
+                  </ul>
+                </div>
+<!-- End of column 2 start of column 3. -->
+                <div class="members-card_right">
+                  {% if user.id == current_user.id %}
+                    <p class="bold">
+                      <i class="far fa-user bold"></i>
+                      YOU
+                    </p>
+                  {% else %}
+                    {% if user.user_is_connected %}
+                      <p class="bold">
+                        <i class="fa-regular fa-square-check bold"></i>
+                        CONNECTED
+                      </p>
+                    {% else %}
+                      {% if user.connection_request_sent %}
+                        <p>
+                          Request Sent
+                        </p>
+                      {% else %}
+                        {% if user.pending_connection_request %}
+                        <p>
+                          Pending Request
+                        </p>
+                      {% else %}
+                          <form action="{{ url_for('views.add_connection') }}" method="POST">
+                            <input type="hidden" name="connected_user_id" value="{{ user.id }}">
+                              <button type="submit" class="btn btn-primary">
+                                Add
+                              </button>
+                          </form>
+                        {% endif %}
+                      {% endif %}
+                    {% endif %}
+                  {% endif %}
+                <br>
+                <br>
+                  <a href="{{ url_for('views.home', user_id=user.id) }}" class="btn light-green accent-3 btn-primary teal-text text-darken-4">
+                    View
+                  </a>
+                </div><!-- End of row/column 3. -->
+              </div> <!-- End of subsection container. -->
+            </div> <!-- End of Member card -->
+          <br>
+<!-- Breaks within jijna for loop to separate member's cards -->
+          <br>
+          {% endfor %}
+      </div>
+<!-- Start of right hand side content -->
+      <div class="profile_right">
+    <br>
+    <br>
+<!-- User's personal info box -->
+      <div class="user-card bold">
+<!-- Jinja used to display user's details if provided -->
+        <h5>
+          {{user.first_name}} {{user.last_name}}
+        </h5>
+<!-- If gym not provided, jinja used to hide display -->
+        {% if user.gym %}
+          <p>
+            Gym: {{ user.gym }}
+          </p>
+        {% endif %}
+<!-- If DOB not provided, jinja used to hide display -->
+        {% if user.calculate_age() %}
+          <p>
+            Age: {{ user.calculate_age() }}
+          </p>
+        {% endif %}
+<!-- If phone number not provided, jinja used to hide display -->
+          {% if user.phone %}
+<!-- If connected user viewing on phone, jinja used to enable phone link -->
+            {% if is_mobile %}
+              <p>
+                Phone: 
+                <a href=”tel:{{ user.phone }}">
+                  {{ user.phone }}
+                </a>
+              </p>
+            {% else %}
+<!-- If connected user viewing on computer, jinja used to disable phone link -->
+              {{ user.phone }}
+            {% endif %}
+          {% endif %}
+      </div>
+    <br>
+<!-- User's site info box -->
+      <div class="stats-card bold">
+        <p>
+          <a href="{{ url_for('views.view_user_connections', user_id=user.id) }}">
+<!-- Jinja used to display user's site stats -->
+            {{ user.first_name }}'s Connections
+          </a>
+          : {{ total_user_connections[user.id] }}
+        </p>
+        <p>
+          {{ user.first_name }}'s Workouts : {{ total_workouts[user.id] }}
+        </p>
+      </div>
+<!-- Link to enable user to edit their profile -->
+        <a href="{{ url_for('views.edit_user', user_id=current_user.id) }}" type="submit" class="btn btn-primary">
+          Update Profile
+        </a>
+    <br>
+    <br>
+      </div>
+{% endblock %}

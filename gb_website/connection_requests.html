@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+    {% block title %}
+     -- Connection Requests
+    {% endblock %}
+    {% block navbar %}  
+    {% endblock %}
+    {% block content %}
+<!-- Start of page -->
+    <div class="profile">
+<!-- Container for page - enables stacking of divs on small screen -->
+        <div class="profile_r-container">
+<!-- Start of left hand side of page -->
+            <div class="profile_left">
+                <h3>
+                    Connection Requests
+                </h3>
+<!-- Jinja used to handle user generated content -->
+                {% if connection_requests %}
+<!--
+    Initial step to prevent requests from users who have subsiquently deleted their account displaying.
+    This is because user_connection_request cannot be null and it would be under those circumstances.
+-->
+                {% set non_blank_requests = [] %}
+                {% for request in connection_requests %}
+                    {% if request.sender.first_name != "" %}
+                        {% set _ = non_blank_requests.append(request) %}
+                    {% endif %}
+                {% endfor %}
+                {% if non_blank_requests %}
+                    <ul>
+                        {% for request in non_blank_requests | sort(attribute="request_date") %}
+                            <li>
+                                <div class="request-card">
+                                    <p>
+                                        From: {{ request.sender.first_name }}
+                                    </p>
+                                    <p>
+                                        Status: {{ request.status }}
+                                    </p>
+                                    <form class="left" action="{{ url_for('views.accept_connection_request', request_id=request.id) }}" method="POST">
+                                        <button class="light-green accent-3 teal-text text-darken-4" type="submit">
+                                            Accept
+                                        </button>
+                                    </form>
+                                    <form class="right" action="{{ url_for('views.reject_connection_request', request_id=request.id) }}" method="POST">
+                                        <button class="red darken-4 white-text" type="submit">
+                                            Reject
+                                        </button>
+                                    </form>
+                                    <br>
+                                    <br>
+                                </div>
+                            </li>
+                            <br>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>
+                        No pending connection requests.
+                    </p>
+                {% endif %}
+            {% else %}
+                <p>
+                    No pending connection requests.
+                </p>
+            {% endif %}
+            </div>
+<!-- Start of right hand side content -->
+            <div class="profile_right">
+                <br>
+                <br>
+<!-- User's personal info box -->
+                    <div class="user-card bold">
+<!-- Jinja used to display user's details -->
+                        <h5>
+                            {{user.first_name}} {{user.last_name}}
+                        </h5>
+<!-- If gym not provided, jinja used to hide display -->
+                        {% if user.gym %}
+                            <p>
+                                Gym: {{ user.gym }}
+                            </p>
+                        {% endif %}
+<!-- If DOB not provided, jinja used to hide display -->
+                        {% if user.calculate_age() %}
+                            <p>
+                                Age: {{ user.calculate_age() }}
+                            </p>
+                        {% endif %}
+<!-- If phone number not provided, jinja used to hide display -->
+                                {% if user.phone %}
+<!-- If user viewing on phone, jinja used to enable phone link -->
+                                    {% if is_mobile %}
+                                        <p>
+                                            Phone: 
+                                            <a href=”tel:{{ user.phone }}">
+                                                {{ user.phone }}
+                                            </a>
+                                        </p>
+                                    {% else %}
+<!-- If user viewing on computer, jinja used to disable phone link -->
+                                        {{ user.phone }}
+                                    {% endif %}
+                                {% endif %}
+                    </div>
+                <br>
+<!-- User's site info box -->
+                    <div class="stats-card bold">
+                        <p>
+                            <a href="{{ url_for('views.view_user_connections', user_id=user.id) }}">
+<!-- Jinja used to display user's site stats -->
+                                {{ user.first_name }}'s Connections
+                            </a>
+                            : {{ total_user_connections[user.id] }}
+                            </p>
+                            <p>
+                                {{ user.first_name }}'s Workouts : {{ total_workouts[user.id] }}
+                            </p>
+                    </div>
+<!-- Button to enable user to update profile -->
+                        <a href="{{ url_for('views.edit_user', user_id=current_user.id) }}" type="submit" class="btn btn-primary">
+                            Update Profile
+                        </a>
+                    <br>
+                    <br>
+            </div>
+{% endblock %}

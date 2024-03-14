@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+  {% block title %}
+     -- Add An Exercise
+  {% endblock %}
+  {% block navbar %}
+  {% endblock %}
+  {% block content %}
+<!-- Start of page -->
+  <div class="add-workout">
+<!-- Container for page - enables stacking of divs on small screen -->
+    <div class="add-workout_r-container">
+<!-- Start of left hand side content -->
+      <div class="add-workout_left">
+<!-- Add exercise form starts here -->
+        <h3>
+          Add Exercise
+        </h3>
+          <div class="container workout-card-items left-align card-panel grey lighten-5">
+            <form id="exerciseForm" method="POST" action="{{ url_for('views.add_exercise', workout_id=workout.id) }}">
+<!-- Exercise Input -->
+              <div class="row">
+                <div class="input-field">
+                  <i class="fa-solid fa-heart-pulse prefix"></i>
+                    <label for="exerciseType">
+                      Exercise
+                    </label>
+                  <br>
+                    <input
+                    type="text"
+                    id="exerciseType"
+                    name="exerciseType"
+                    minlength="1" 
+                    maxlength="30"
+                    placeholder="Eg. Star Jumps"
+                    required>
+                </div>
+              </div>
+<!-- Weight Input -->
+              <div class="row">
+                <div class="input-field">
+                  <i class="fa-solid fa-weight-hanging prefix"></i>
+                    <label for="weight">
+                      Weight (Kg)
+                    </label>
+                  <br>
+                    <input 
+                    id="weight" 
+                    name="weight" 
+                    minlength="1" 
+                    maxlength="3" 
+                    type="number" 
+                    placeholder="(Optional)">
+                </div>
+              </div>
+<!-- Reps Input -->
+              <div class="row">
+                <div class="input-field">
+                  <i class="fa-solid fa-dumbbell prefix"></i>
+                    <label for="reps">
+                      Reps
+                    </label>
+                  <br>
+                    <input 
+                    id="reps" 
+                    name="reps" 
+                    minlength="1" 
+                    maxlength="2" 
+                    placeholder="(Optional)" 
+                    type="number">
+                  </div>
+              </div>
+<!-- Sets Input -->
+              <div class="row">
+                <div class="input-field">
+                  <i class="fa-solid fa-dumbbell prefix"></i>
+                    <label for="sets">
+                      Sets
+                    </label>
+                  <br>
+                    <input 
+                    id="sets" 
+                    name="sets" 
+                    minlength="1" 
+                    maxlength="2" 
+                    placeholder="(Optional)" 
+                    type="number">
+                </div>
+              </div>
+<!-- Distance Input -->
+              <div class="row">
+                <div class="input-field">
+                  <i class="fa-solid fa-person-running prefix"></i>
+                    <label for="distance">
+                      Distance (m)
+                    </label>
+                  <br>
+                    <input 
+                    id="distance" 
+                    name="distance" 
+                    minlength="1" 
+                    maxlength="5" 
+                    type="number" 
+                    placeholder="(Optional)">
+                </div>
+              </div>
+<!-- Submit Button -->
+              <div class="row">
+                <div class="center-align">
+              <br>
+                <button type="submit" class="btn light-green accent-3 left btn-primary">
+                  Add
+                </button>
+<!-- Link to cancel form -->
+<!-- Used instead of a button to prevent exercise duplicating within workout on cancelation -->
+                  <a href="{{ url_for('views.home', user_id=current_user.id) }}" class="btn grey lighten-1 right btn-primary" name="cancel" id="cancelButton">
+                    Cancel
+                  </a>
+                <br>
+                <br>
+                </div>
+              </div>
+<!-- End of form -->
+            </form>
+          </div>
+        <br>
+        <br>
+      </div>
+<!-- Start of right hand side content -->
+      <div class="profile_right">
+    <br>
+    <br>
+<!-- User's personal info box -->
+        <div class="user-card bold">
+<!-- Jinja used to display user's details if provided -->
+          <h6>
+            {{user.first_name}} {{user.last_name}}
+          </h6>
+          {% if user.gym %}
+            <p>
+              Gym: {{ user.gym }}
+            </p>
+          {% endif %}
+          {% if user.calculate_age() %}
+            <p>
+              Age: {{ user.calculate_age() }}
+            </p>
+          {% endif %}
+          {% if user.phone %}
+            <p>
+              Phone: {{ user.phone }}
+            </p>
+          {% endif %}
+        </div>
+      <br>
+<!-- User's site info box -->
+        <div class="stats-card bold">
+          <p>
+            <a href="{{ url_for('views.view_user_connections', user_id=user.id) }}">
+<!-- Jinja used to display user's site stats -->
+              {{ user.first_name }}'s Connections
+            </a>
+              : {{ total_user_connections }}
+          </p>
+          <p>
+            {{ user.first_name }}'s Workouts : {{ total_workouts }}
+          </p>
+        </div>
+<!-- Button to enable user to edit their profile -->
+          <a href="{{ url_for('views.edit_user', user_id=current_user.id) }}" type="submit" class="btn btn-primary">
+            Edit Profile
+          </a>
+<!-- End of right hand side content -->
+    </div>
+  {% endblock %}
