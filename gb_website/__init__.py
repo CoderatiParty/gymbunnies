@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
@@ -11,7 +12,6 @@ The above lines are used to import built-in functions from Flask
 
 db = SQLAlchemy() # Defines the database
 DB_NAME = "database.db" # Names the database
-mail = Mail() # Defines the mail function for password reset requests
 
 
 def create_app():
@@ -20,30 +20,31 @@ def create_app():
     """
     app = Flask(__name__) # Creates the app
     app.config['SECRET_KEY'] = 'gymbunniesareusman' # Defines the secret key
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}' # Defines the database
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + DB_NAME # Defines the database
     app.config['MAIL_SERVER'] = 'smtp.zoho.eu' # Defines the server for outgoing mail
     app.config['MAIL_PORT'] = 465 # Sets the port
     app.config['MAIL_USE_SSL'] = True # Assigns SSL
-    app.config['MAIL_USERNAME'] = 'info@hippobooks.co.uk' # Outgoing email address
-    app.config['MAIL_PASSWORD'] = 'M3ssengerhblps' # Mail password
+    app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME') # Outgoing email address
+    app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD') # Mail password
+    
     db.init_app(app)
 
     from .views import views # Imports the views routes from the views file
     from .auth import auth # Imports the auth routes from the auth file
 
-    mail = Mail(app) # Sets the mail function within the app
-
     app.register_blueprint(views, url_prefix='/') # Calls the Blueprint application from within Flask
     app.register_blueprint(auth, url_prefix='/') # Calls the Blueprint application from within Flask
 
-    from .models import User # Imports the database 'User' from the models file
-    
+    mail = Mail(app) # Sets the mail function within the app
+
     with app.app_context(): # Calls the databaase tables and makes them assessible within the application
         db.create_all()
 
     login_manager = LoginManager()# Calls the login manager application
     login_manager.login_view = 'auth.login' # Sets the login route
     login_manager.init_app(app) # Sets the manager within the app
+
+    from .models import User # Imports the database 'User' from the models file
 
     @login_manager.user_loader
     def load_user(id):
