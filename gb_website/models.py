@@ -14,7 +14,7 @@ class Workout(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True) # Sets a primary identifier as an integer
     workout_date = db.Column(db.Date)
-    workout_type = db.Column(db.Enum('select', 'Arms', 'Back', 'Cardio', 'Chest', 'Core', 'Fullbody', 'Legs', 'Lower', 'Pull', 'Push', 'Upper'), default='select', nullable=False) # Specific options for the workout type
+    workout_type = db.Column(db.Enum('Arms', 'Back', 'Cardio', 'Chest', 'Core', 'Fullbody', 'Legs', 'Lower', 'Pull', 'Push', 'Upper', name='workout_type_enum'), default='select', nullable=False) # Specific options for the workout type
     workout_duration = db.Column(db.String(7))
     exercises = db.relationship('Exercise', backref='workout', cascade="all, delete", lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) # Linked to the User database as a foreign key
