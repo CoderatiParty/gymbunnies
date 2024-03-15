@@ -20,6 +20,10 @@ def create_app():
     """
     app = Flask(__name__) # Creates the app
     app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY") # Generates a random secret key
+    uri = os.environ.get("DATABASE_URL")
+    if uri.startswith("postgres://"):
+        uri = uri.replace("postgres://", "postgresql://", 1)
+    app.config["SQLALCHEMY_DATABASE_URI"] = uri
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL") # Defines the database
     app.config['MAIL_SERVER'] = 'smtp.zoho.eu' # Defines the server for outgoing mail
     app.config['MAIL_PORT'] = 465 # Sets the port
