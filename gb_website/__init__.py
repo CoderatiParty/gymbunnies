@@ -23,9 +23,9 @@ def create_app():
         app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_URL")
     else:
         uri = os.environ.get("DATABASE_URL")
-    if uri.startswith("postgres://"):
-        uri = uri.replace("postgres://", "postgresql://", 1)
-    app.config["SQLALCHEMY_DATABASE_URI"] = uri
+        if uri.startswith("postgres://"):
+            uri = uri.replace("postgres://", "postgresql://", 1)
+        app.config["SQLALCHEMY_DATABASE_URI"] = uri
 
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URL") # Defines the database
     app.config['MAIL_SERVER'] = 'smtp.zoho.eu'  # Defines the server for outgoing mail
