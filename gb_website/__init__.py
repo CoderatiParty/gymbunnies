@@ -1,5 +1,8 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+if os.path.exists("env.py"):
+    import env
 from flask_login import LoginManager
 from flask_mail import Mail
 from os import path, environ
@@ -14,13 +17,22 @@ def create_app():
     This is the application's main function
     """
     app = Flask(__name__)  # Creates the app
-    app.config['SECRET_KEY'] = 'gymbunniesareusman'  # Defines the secret key
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + DB_NAME  # Defines the database
+    app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY") # Defines the secret key
+
+    if os.environ.get("DEVELOPMENT") == "True":
+        app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_URL")
+    else:
+        uri = os.environ.get("DATABASE_URL")
+    if uri.startswith("postgres://"):
+        uri = uri.replace("postgres://", "postgresql://", 1)
+    app.config["SQLALCHEMY_DATABASE_URI"] = uri
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URL") # Defines the database
     app.config['MAIL_SERVER'] = 'smtp.zoho.eu'  # Defines the server for outgoing mail
     app.config['MAIL_PORT'] = 465  # Sets the port
     app.config['MAIL_USE_SSL'] = True  # Assigns SSL
-    app.config['MAIL_USERNAME'] = environ.get('MAIL_USERNAME')  # Outgoing email address
-    app.config['MAIL_PASSWORD'] = environ.get('MAIL_PASSWORD')  # Mail password
+    app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')  # Outgoing email address
+    app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')  # Mail password
 
     db.init_app(app)
 
