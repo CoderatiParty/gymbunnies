@@ -551,9 +551,10 @@ def user_agreement():
     return render_template("user_agreement.html", user=current_user)
 
 
-@views.errorhandler(404)
-def page_not_found(error):
+@views.route('/', defaults={'path': ''})
+@views.route('/<path:path>')
+def catch_all(path):
     """
-    Custom 404 error page.
+    Catch all routes that don't match any other routes.
     """
     return render_template('catch_all.html'), 404
