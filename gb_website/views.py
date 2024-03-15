@@ -551,7 +551,7 @@ def user_agreement():
     return render_template("user_agreement.html", user=current_user)
 
 
-@app.errorhandler(404)
+@views.errorhandler(404)
 def page_not_found(error):
     """
     Custom 404 error page.

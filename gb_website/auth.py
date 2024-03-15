@@ -129,10 +129,15 @@ def update_password(token):
         elif len(password1) < 7:
             flash('Password must be at least 7 characters.', category='error')
         else:
-            update_user = User(password=generate_password_hash(
-                password1, method='pbkdf2:sha256')) # Updates password
-            db.session.commit() # Commits new record to the database
-            login_user(update_user, remember=True) # Sets cookie
-            return redirect(url_for('views.home', user=current_user.id)) # Redirects successful user to next page
+            user = User.verify_reset_token(token)
+            if user is None:
+                flash('Invalid or expired token.', 'error')
+                return redirect(url_for('auth.forgotten_password'))
+            else:
+                user.password = generate_password_hash(password1, method='pbkdf2:sha256')
+                db.session.commit()
+                login_user(user, remember=True)
+                flash('Your password has been updated!', 'success')
+                return redirect(url_for('views.home', user_id=current_user.id)) # Redirects successful user to next page
         
     return render_template("update_password.html", user=current_user) # Sets the frontend
