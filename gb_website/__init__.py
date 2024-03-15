@@ -6,6 +6,7 @@ from os import path, environ
 
 db = SQLAlchemy()  # Defines the database
 DB_NAME = "database.db"  # Names the database
+mail = Mail()
 
 def create_app():
     """
@@ -13,6 +14,13 @@ def create_app():
     """
     app = Flask(__name__)  # Creates the app
     app.config['SECRET_KEY'] = 'gymbunniesareusman'  # Defines the secret key
+    if os.environ.get("DEVELOPMENT") == "True":
+        app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_URL")
+    else:
+        uri = os.environ.get("DATABASE_URL")
+        if uri.startswith("postgres://"):
+            uri = uri.replace("postgres://", "postgresql://", 1)
+        app.config["SQLALCHEMY_DATABASE_URI"] = uri
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + DB_NAME  # Defines the database
     app.config['MAIL_SERVER'] = 'smtp.zoho.eu'  # Defines the server for outgoing mail
     app.config['MAIL_PORT'] = 465  # Sets the port
