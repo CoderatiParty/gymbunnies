@@ -50,8 +50,8 @@ class User(db.Model, UserMixin):
     # Defines relationships for connections and connection requests. Courtesy of Chat GPT
     sent_connection_requests = db.relationship('ConnectionRequest', foreign_keys='ConnectionRequest.sender_id', back_populates='sender', cascade="all, delete-orphan")
     received_connection_requests = db.relationship('ConnectionRequest', foreign_keys='ConnectionRequest.receiver_id', back_populates='receiver', cascade="all, delete-orphan")
-    connections = db.relationship('UserConnection', foreign_keys='UserConnection.user_id', back_populates='user')
-    connected_to = db.relationship('UserConnection', foreign_keys='UserConnection.connected_user_id', back_populates='connected_user')
+    connections = db.relationship('UserConnection', foreign_keys='UserConnection.user_id', back_populates='user', cascade="all, delete-orphan")
+    connected_to = db.relationship('UserConnection', foreign_keys='UserConnection.connected_user_id', back_populates='connected_user', cascade="all, delete-orphan")
 
 
     def calculate_age(self):
