@@ -85,7 +85,7 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
 
-    return redirect(url_for("auth.sign_up"))
+    return redirect(url_for("auth.sign-up"))
 
 
 @views.route("/add_workout", methods=["GET", "POST"])
