@@ -288,9 +288,7 @@ The website consists of eighteen distinct pages:
 
 ### Wireframes
 
-![All Pages](docs/macroblaster_wireframes.jpg)
-
-![Narrow Page](docs/narrow_page_wireframe.png)  
+![All Pages](docs/wireframes.jpg)
   
 [Back to Contents](#Contents)  
   
@@ -368,14 +366,14 @@ WTForms==3.1.2
   - The results of the feature are made available to other users to support the sharing of knowledge and offer motivation.
   - User stories covered: 
 
-[Add Workout](docs/workout_inputs.jpeg)  
+![Add Workout](docs/workout_inputs.jpeg)  
 
 - Add Workout
   - Uses javascript (getElementById, eventListeners, and if/else statments) to add user inputs to the database, provide select options, and define input values.
   - An alert is triggered if unacceptable information is entered. NB. EMAIL ADDRESSES ARE OT REQUIRED TO BE CORRECTLY FORMATED ON PURPOSE (ONLY 4 CHARACTERS MINUMUM). THIS IS FOR TESTING CONVENIENCE TO ALLOW THE OPENING OF MULTIPLE ACCOUNTS. PASSWORD ON ALL EXAMPLE ACCOUNTS: 1111111
   - User stories covered: 
 
-[Add Exercise](docs/exercise_inputs.jpeg)  
+![Add Exercise](docs/exercise_inputs.jpeg)  
 
 - Add Exercise
   - Uses javascript (getElementById, eventListeners, and if/else statments) to add user inputs to the database, provide select options, and define input values.
@@ -383,7 +381,7 @@ WTForms==3.1.2
   - An additional alert is placed on the 'Bulk' button to advise the user that a resistance training routine s recommended with this option.
   - User stories covered: 
 
-[User Account](docs/login_page.jpeg)  
+![User Account](docs/login_page.jpeg)  
 
 - Login/sign_up Page
   - Uses Python to create a password-protected profile for each user.
@@ -391,21 +389,21 @@ WTForms==3.1.2
   - Alerts guide the user through the process
   NB. EMAIL ADDRESSES ARE NOT REQUIRED TO BE CORRECTLY FORMATED ON PURPOSE (ONLY 4 CHARACTERS MINUMUM). THIS IS FOR TESTING CONVENIENCE TO ALLOW THE OPENING OF MULTIPLE ACCOUNTS. PASSWORD ON ALL EXAMPLE ACCOUNTS: 1111111
 
-[User Box](docs/user_box.jpeg)  
+![User Box](docs/user_box.jpeg)  
 
 - Personal Information Output
   - Uses Python and Jinja to display user inputs once information has been provided by the user through the above methods.
   - Information varies depending on connection status when viewed by visitors:
-[User Box Hidden](docs/user_box_hidden_info.jpeg)
+![User Box Hidden](docs/user_box_hidden_info.jpeg)
   - User stories covered: 
 
-[Stat Box](docs/stat_box.jpeg)  
+![Stat Box](docs/stat_box.jpeg)  
 
 - Site Activity Output
   - Uses Python and Jinja to display user inputs once information has been provided by the user through the above methods.
   - User stories covered: 
 
-[Users Workouts](docs/users_workouts.jpeg)  
+![Users Workouts](docs/users_workouts.jpeg)  
 
 - Activity Level Selection
   - Uses HTML to display user workouts.
@@ -413,13 +411,13 @@ WTForms==3.1.2
   - A slight colour differential is used to separate workouts and exercises.
   - User stories covered: 
 
-[Add Connection](docs/add_connection.jpeg)  
+![Add Connection](docs/add_connection.jpeg)  
 
 - Add connection Button
   - Uses Python and Jinja to execute the required function. Once clicked, a 'request sent' notification is displayed until the request is acted upon. This prevents clashes on the database.
   - User stories covered: 
 
-[Footer Section](docs/footer_section.jpeg) 
+![Footer Section](docs/footer_section.jpeg) 
 
 - Footer Section
   - The footer contains GymBunnies' logo and links to corporate pages and social media.
@@ -436,7 +434,7 @@ WTForms==3.1.2
     - Privacy Statement
   - User stories covered: 
 
-[404 Page](docs/catch_all_page.jpeg) 
+![404 Page](docs/catch_all_page.jpeg) 
 
 - 404:
   - Contains a link to return the user to the home page if an incorrect address is entered.
@@ -476,7 +474,7 @@ Example for home.html:
 
 home.html [results](https://validator.w3.org/nu/?doc=https%3A%2F%2Fgymbunnies-211fc7651ce9.herokuapp.com%2Flogin%3Fnext%3D%252F1)
 
-home.html [Corresponding code snippet](code_snippet.jpeg)
+home.html ![Corresponding code snippet](code_snippet.jpeg)
 
 ### CSS Validation
 
@@ -494,7 +492,7 @@ index.htm [results](https://wave.webaim.org/report#/https://gymbunnies-211fc7651
 
 Running each page through Google Lighthouse again proved problamatic given only the login page could be tested. As this page has an identical structure to the logged in pages, it's results, which were deemed acceptable, were taken as representative of every page. The site owners are still working on SEO and, once updated, this will rival that of previous projects!
 
-![Login Performance image](docs/login_performance.jpg)
+![Login Performance image](docs/login_performance.jpeg)
 
 index.htm [results](https://googlechrome.github.io/lighthouse/viewer/?psiurl=https%3A%2F%2Fgymbunnies-211fc7651ce9.herokuapp.com%2Flogin&strategy=mobile&category=performance&category=accessibility&category=best-practices&category=seo&category=pwa&utm_source=lh-chrome-ext)
 
