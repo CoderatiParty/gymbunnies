@@ -499,6 +499,8 @@ def remove_connection():
     connected_user_ids = request.form.getlist('connected_user_id[]')  # Get list of connected user IDs
     
     print("Connected User IDs to Remove:", connected_user_ids)  # Add this line to print the connected user IDs
+
+    connection_request_sent = False
     
     for connected_user_id in connected_user_ids:
         # Query the existing connections in both directions
@@ -520,8 +522,11 @@ def remove_connection():
 
         # Update the total number of connections for both users
         update_connection_counts(current_user.id, connected_user_id)
+
         # After successfully removing the connection, set connection_request_sent to False
         connection_request_sent = ConnectionRequest.query.filter_by(sender_id=current_user.id).first() is not None
+
+    pending_connection_request = False
 
     return redirect(request.referrer)
 
